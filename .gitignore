@@ -1,0 +1,15 @@
+/tmp
+/mvn
+/allure
+/.allure
+/.settings
+/.classpath
+/target
+/.project
+
+.idea
+*.iws
+*.iml
+*.ipr
+
+.DS_Store
