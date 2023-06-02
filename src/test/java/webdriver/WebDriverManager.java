@@ -7,6 +7,7 @@ import logger.Log;
 import org.junit.Assert;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 import java.util.concurrent.TimeUnit;
@@ -42,8 +43,11 @@ public class WebDriverManager {
             case "ch":
             case "chrome":
                 ChromeDriverManager.getInstance(DriverManagerType.CHROME).setup();
+                ChromeOptions options = new ChromeOptions();
+                options.addArguments("--remote-allow-origins=*");
+
                 Log.info("Starting WebDriver with Chrome");
-                driver = new ChromeDriver();
+                driver = new ChromeDriver(options);
                 break;
 
             default:
