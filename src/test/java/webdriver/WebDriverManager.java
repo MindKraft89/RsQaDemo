@@ -1,7 +1,6 @@
 package webdriver;
 
 import io.github.bonigarcia.wdm.config.DriverManagerType;
-import io.github.bonigarcia.wdm.managers.ChromeDriverManager;
 import io.github.bonigarcia.wdm.managers.FirefoxDriverManager;
 import logger.Log;
 import org.junit.Assert;
@@ -47,7 +46,7 @@ public class WebDriverManager {
                 //ChromeDriverManager.getInstance(DriverManagerType.CHROME).setup();
                 ChromeOptions options = new ChromeOptions();
                 options.addArguments("--remote-allow-origins=*");
-                //options.addArguments("--headless=new");
+                options.addArguments("--headless=new");
                 Log.info("Starting WebDriver with Chrome");
                 driver = new ChromeDriver(options);
                 break;
