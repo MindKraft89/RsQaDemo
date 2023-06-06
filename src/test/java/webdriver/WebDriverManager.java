@@ -5,16 +5,12 @@ import io.github.bonigarcia.wdm.managers.ChromeDriverManager;
 import io.github.bonigarcia.wdm.managers.FirefoxDriverManager;
 import logger.Log;
 import org.junit.Assert;
-import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.remote.DesiredCapabilities;
-import org.openqa.selenium.remote.RemoteWebDriver;
 
 import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.concurrent.TimeUnit;
 
 public class WebDriverManager {
@@ -47,12 +43,12 @@ public class WebDriverManager {
 
             case "ch":
             case "chrome":
-                ChromeDriverManager.getInstance(DriverManagerType.CHROME).setup();
+                io.github.bonigarcia.wdm.WebDriverManager.chromedriver().setup();
+                //ChromeDriverManager.getInstance(DriverManagerType.CHROME).setup();
                 ChromeOptions options = new ChromeOptions();
                 options.addArguments("--remote-allow-origins=*");
+                //options.addArguments("--headless=new");
                 Log.info("Starting WebDriver with Chrome");
-                options.getCapability("se:cdp");
-
                 driver = new ChromeDriver(options);
                 break;
 
