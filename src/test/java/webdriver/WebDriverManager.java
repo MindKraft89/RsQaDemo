@@ -1,22 +1,26 @@
 package webdriver;
 
 import io.github.bonigarcia.wdm.config.DriverManagerType;
-import io.github.bonigarcia.wdm.managers.ChromeDriverManager;
 import io.github.bonigarcia.wdm.managers.FirefoxDriverManager;
 import logger.Log;
 import org.junit.Assert;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.MutableCapabilities;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
 import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
 public class WebDriverManager {
 
     private static WebDriverManager instance = new WebDriverManager();
     private static WebDriver driver = null;
+    JavascriptExecutor js = (JavascriptExecutor) driver;
     private static String link = WebDriverLink.getLink();
 
     public static WebDriverManager getInstance() {
@@ -44,11 +48,23 @@ public class WebDriverManager {
             case "ch":
             case "chrome":
                 //io.github.bonigarcia.wdm.WebDriverManager.chromedriver().setup();
-                ChromeDriverManager.getInstance(DriverManagerType.CHROME).setup();
+                //ChromeDriverManager.getInstance(DriverManagerType.CHROME).setup();
+                //ChromeOptions options = new ChromeOptions();
+                //options.addArguments("--remote-allow-origins=*");
+                //Log.info("Starting WebDriver with Chrome");
+                //driver = new ChromeDriver();
+                //break;
+
                 ChromeOptions options = new ChromeOptions();
-                options.addArguments("--remote-allow-origins=*");
-                Log.info("Starting WebDriver with Chrome");
-                driver = new ChromeDriver();
+                options.addArguments("--start-maximized");
+
+                MutableCapabilities capabilities = new MutableCapabilities();
+                HashMap<String, String> bstackOptions = new HashMap<>();
+                capabilities.setCapability("bstack:options", bstackOptions);
+                capabilities.setCapability(ChromeOptions.CAPABILITY, options);
+
+                driver = new RemoteWebDriver(
+                        new URL("https://hub.browserstack.com/wd/hub"), capabilities);
                 break;
 
             default:
